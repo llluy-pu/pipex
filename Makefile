@@ -6,7 +6,7 @@
 #    By: llluy-pu <llluy-pu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 01:33:16 by llluy-pu          #+#    #+#              #
-#    Updated: 2023/06/01 21:22:18 by llluy-pu         ###   ########.fr        #
+#    Updated: 2023/06/02 17:10:15 by llluy-pu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,30 +24,32 @@ LIBFT_DIR= libft
 LIBFT_LIB= $(LIBFT_DIR)/libft.a
 INCLUDES= include
 OBJ_DIR= obj/
-SRC_DIR= src/
+#SRC_DIR= src/
+SRC_DIR= srcs/
 
 # **************************************************************************** #
 #                                .C & .H FILES                                 #
 # **************************************************************************** #
 
 SRC_FILE=	\
-			chose_rr_or_r.c	\
-			main.c	\
-			more_three_number.c	\
-			under_three_number.c
-
-SRC_COMMON_FILE= \
-			chained_list.c	\
-			check_args.c	\
-			check_sort.c	\
-			fill_array.c	\
-			fill_chained_list.c	\
-			get_array.c	\
-			push.c	\
-			reverse_rotate.c	\
-			rotate.c	\
-			swap.c	\
-			utils.c
+			algo_spe.c\
+			algo_utils.c\
+			algo.c\
+			argv_check.c\
+			argv_parsing.c\
+			clean_exit.c\
+			main.c\
+			swap_pa.c\
+			swap_pb.c\
+			swap_ra.c\
+			swap_rb.c\
+			swap_rr.c\
+			swap_rra.c\
+			swap_rrb.c\
+			swap_rrr.c\
+			swap_sa.c\
+			swap_sb.c\
+			swap_ss.c
 
 SRC_BONUS_FILE= \
 			checker_main.c
@@ -55,10 +57,6 @@ SRC_BONUS_FILE= \
 SRC=		$(addprefix $(SRC_DIR), $(SRC_FILE))
 OBJ_FILE= 	$(SRC_FILE:.c=.o)
 OBJ=		$(addprefix $(OBJ_DIR), $(OBJ_FILE))
-
-SRC_COMMON=		$(addprefix $(SRC_DIR), $(SRC_COMMON_FILE))
-OBJ_COMMON_FILE= $(SRC_COMMON_FILE:.c=.o)
-OBJ_COMMON=		$(addprefix $(OBJ_DIR), $(OBJ_COMMON_FILE))
 
 SRC_BONUS=		$(addprefix $(SRC_DIR), $(SRC_BONUS_FILE))
 OBJ_BONUS_FILE= $(SRC_BONUS_FILE:.c=.o)
@@ -90,7 +88,7 @@ HEADER =			@echo "${COLOR_CYAN}\
 					\n    +\#+\#+\#+\#+\#+   +\#+               								\
 					\n         \#+\#    \#+\#                   								\
 					\n        \#\#\#   \#\#\#\#\#\#\#.fr        								\
-					\n Project ${NAME} created by: ${CREATOR_NAME} ${CREATOR_EMAIL}	\
+					\n\n Project ${NAME} created by: ${CREATOR_NAME} ${CREATOR_EMAIL}			\
 					${COLOR_END}"
 
 HEADER_COMPIL =	@echo "${COLOR_YELLOW}\
@@ -135,20 +133,20 @@ HEADER_EXITLIB =	@echo "${COLOR_GREEN}\
 
 all: $(NAME)
 
-$(NAME): $(LIBFT_LIB) $(OBJ) $(OBJ_COMMON)
+$(NAME): $(LIBFT_LIB) $(OBJ)
 	$(HEADER)
-	$(CC) $(CFLAGS) -o $@ $(OBJ) $(OBJ_COMMON) $(LIBFT_LIB)
+	$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBFT_LIB)
 
-malloc_test: $(LIBFT_LIB) $(OBJ) $(OBJ_COMMON)
-	$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ $(OBJ) $(OBJ_COMMON) $(LIBFT_LIB) -L. -lmallocator
+malloc_test: $(LIBFT_LIB) $(OBJ)
+	$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ $(OBJ) $(LIBFT_LIB) -L. -lmallocator
 
 $(LIBFT_LIB): makelibf ;
 
 bonus: $(NAME_BONUS)
 
-$(NAME_BONUS): $(LIBFT_LIB) $(OBJ_COMMON) $(OBJ_BONUS)
+$(NAME_BONUS): $(LIBFT_LIB) $(OBJ_BONUS)
 	$(HEADER)
-	$(CC) $(CFLAGS) -o $@ $(OBJ_COMMON) $(OBJ_BONUS) $(LIBFT_LIB)
+	$(CC) $(CFLAGS) -o $@ $(OBJ_BONUS) $(LIBFT_LIB)
 
 makelibf :
 	$(HEADER_ENTERLIB)
@@ -159,15 +157,10 @@ $(OBJ): | $(OBJ_DIR)
 
 $(OBJ_BONUS): | $(OBJ_DIR)
 
-$(OBJ_COMMON): | $(OBJ_DIR)
-
 $(OBJ_DIR):
 	mkdir -p $@
 
 $(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJ_COMMON): $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_BONUS): $(OBJ_DIR)%.o: $(SRC_DIR)%.c
@@ -177,7 +170,7 @@ header:
 	$(HEADER)
 
 cleanobj:
-	rm -f $(OBJ) $(OBJ_BONUS) $(OBJ_COMMON)
+	rm -f $(OBJ) $(OBJ_BONUS)
 
 cleanobjdir: cleanobj
 	rm -rf $(OBJ_DIR)
