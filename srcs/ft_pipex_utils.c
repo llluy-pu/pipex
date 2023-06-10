@@ -6,7 +6,7 @@
 /*   By: llluy-pu <llluy-pu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 16:30:30 by llluy-pu          #+#    #+#             */
-/*   Updated: 2023/06/10 20:22:38 by llluy-pu         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:41:33 by llluy-pu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	error_exit(char *msg, int code)
 {
-	ft_putstr_fd(msg, 2);
+	perror(msg);
 	exit(code);
 	return ;
 }
