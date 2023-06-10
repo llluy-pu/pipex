@@ -6,7 +6,7 @@
 /*   By: llluy-pu <llluy-pu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:12:19 by llluy-pu          #+#    #+#             */
-/*   Updated: 2023/06/10 17:30:56 by llluy-pu         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:21:58 by llluy-pu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ void	exec(char *cmd, char **env)
 	path = get_path(s_cmd[0], env);
 	if (execve(path, s_cmd, env) == -1)
 	{
-		ft_putstr_fd("pipex: command not found: ", 2);
 		ft_putendl_fd(s_cmd[0], 2);
 		ft_free_tab(s_cmd);
-		exit(0);
+		error_exit("pipex: command not found\n", 127);
 	}
 }
 
@@ -56,12 +55,12 @@ int	main(int ac, char **av, char **env)
 	pid_t	pid;
 
 	if (ac != 5)
-		error_exit(1);
+		error_exit("usage: ./pipex file1 cmd1 cmd2 file2\n", 1);
 	if (pipe(p_fd) == -1)
-		exit(-1);
+		error_exit("pipex: pipe error\n", -1);
 	pid = fork();
 	if (pid == -1)
-		exit(-1);
+		error_exit("pipex: fork error\n", -1);
 	if (!pid)
 		arg_cmd1(av, p_fd, env);
 	arg_cmd2(av, p_fd, env);

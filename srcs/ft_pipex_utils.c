@@ -6,17 +6,17 @@
 /*   By: llluy-pu <llluy-pu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 16:30:30 by llluy-pu          #+#    #+#             */
-/*   Updated: 2023/06/10 17:06:40 by llluy-pu         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:22:38 by llluy-pu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-void	error_exit(int n_exit)
+void	error_exit(char *msg, int code)
 {
-	if (n_exit == 1)
-		ft_putstr_fd("./pipex infile cmd cmd outfile\n", 2);
-	exit(0);
+	ft_putstr_fd(msg, 2);
+	exit(code);
+	return ;
 }
 
 int	open_file(char *file, int in_or_out)
@@ -28,7 +28,7 @@ int	open_file(char *file, int in_or_out)
 	if (in_or_out == 1)
 		ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (ret == -1)
-		exit(0);
+		error_exit("pipex: no such file or directory\n", 1);
 	return (ret);
 }
 

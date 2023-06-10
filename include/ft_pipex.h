@@ -6,7 +6,7 @@
 /*   By: llluy-pu <llluy-pu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:13:04 by llluy-pu          #+#    #+#             */
-/*   Updated: 2023/06/10 17:06:46 by llluy-pu         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:17:16 by llluy-pu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ char	*my_getenv(char *name, char **env);
 char	*get_path(char *cmd, char **env);
 void	exec(char *cmd, char **env);
 void	ft_free_tab(char **tab);
-void	error_exit(int n_exit);
+void	error_exit(char *msg, int n_exit);
 
 #endif
